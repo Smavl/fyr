@@ -2,6 +2,7 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 from http import HTTPMethod
 from urllib.parse import urlparse, parse_qs
 import base64
+import color_codes as col
 
 
 
@@ -39,13 +40,13 @@ class BasicRequestHandler(BaseHTTPRequestHandler):
     def log_message(self,format, *args):
         super().log_message(format,*args)
         details = []
-        details.append(f"[*] Method: {self.command}")
-        details.append(f"[*] Path: {self.path}")
-        details.append(f"[*] Headers:")
+        details.append(f"[*] {col.BLUE}Method:{col.RESET} {self.command}")
+        details.append(f"[*] {col.BLUE}Path:{col.RESET} {self.path}")
+        details.append(f"[*] {col.BLUE}Headers{col.RESET}:")
         for header, value in self.headers.items():
             details.append(f"  {header}: {value}")
         if hasattr(self, 'decoded_content') and self.decoded_content:
-            details.append(f"[*] Content:\n{self.decoded_content}")
+            details.append(f"[*] {col.BLUE}Content:{col.RESET}\n{self.decoded_content}")
     
 
         print("\n".join(details))
@@ -61,7 +62,7 @@ class BasicRequestHandler(BaseHTTPRequestHandler):
             result = handler(self)
             self.send_response(200)
             self.end_headers()
-            if result and self.options.echo:
+            if result and self.options.__getattribute__("echo"):
                 self.wfile.write(str(result).encode())
         else:
             self.send_response(404)
@@ -69,6 +70,7 @@ class BasicRequestHandler(BaseHTTPRequestHandler):
 
 
 
+@route('/')
 @route('/bd')
 def b64_decode_request(request):
     parsed_params = urlparse(request.path) 

@@ -1,6 +1,8 @@
 import argparse
 # import flask
 import basic_http
+import color_codes as col
+
 
 class ServerOptions:
     def __init__(self, echo=False, verbose=False):
@@ -9,25 +11,27 @@ class ServerOptions:
 
 
 def print_banner():
-    banner="""
-   ▄████████ ▄██   ▄      ▄████████ 
-  ███    ███ ███   ██▄   ███    ███ 
-  ███    █▀  ███▄▄▄███   ███    ███ 
- ▄███▄▄▄     ▀▀▀▀▀▀███  ▄███▄▄▄▄██▀ 
-▀▀███▀▀▀     ▄██   ███ ▀▀███▀▀▀▀▀   
-  ███        ███   ███ ▀███████████ 
-  ███        ███   ███   ███    ███ 
-  ███         ▀█████▀    ███    ███ 
-                         ███    ███
-        """
+    banner=f"""{col.RED}
+       ▄████████ ▄██   ▄      ▄████████ 
+      ███    ███ ███   ██▄   ███    ███ 
+      ███    █▀  ███▄▄▄███   ███    ███ 
+     ▄███▄▄▄     ▀▀▀▀▀▀███  ▄███▄▄▄▄██▀ 
+    ▀▀███▀▀▀     ▄██   ███ ▀▀███▀▀▀▀▀   
+      ███        ███   ███ ▀███████████ 
+      ███        ███   ███   ███    ███ 
+      ███         ▀█████▀    ███    ███ 
+                             ███    ███
+    {col.RESET}"""
+
     print(banner)
 
 def main():
 
-    print("launching HTTPServer")
 
     port = int(args.port) if args.port else 8888
     bind = str(args.bind) if args.bind else 'localhost'
+
+    print(f"Launching HTTPServer @ http://{bind}:{port}")
     server_options = ServerOptions(echo=args.echo,verbose=args.verbose)
     basic_http.run(host=bind, port=port, options=server_options)
 
