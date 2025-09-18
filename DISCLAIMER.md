@@ -1,0 +1,1 @@
+This software is provided for educational and research purposes only. The author assumes no responsibility for any misuse or damage caused by this tool/module. Use at your own risk and ensure compliance with all applicable laws and regulations.
